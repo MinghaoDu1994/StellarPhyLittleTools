@@ -1,14 +1,15 @@
 import pandas 
 
 def PairMatchWithPosition(table1, table2, t1_ra_name, t1_dec_name, 
-                          t2_ra_name, t2_dec_name, output_file_name,
+                          t2_ra_name, t2_dec_name, output_file_name,how,
                          thres_dist = 1/3600):
 # Input: 
 #         1. table1, table2: pandas table1 and pandas table2;
 #         2. t1_ra_name, t1_dec_name, t2_ra_name, t2_dec_name : (strs) columns names of 
 #         ra and dec in two tables
 #         3. output_file_name: (strs) the name of the output merged file you want to save
-#         4. thres_dist: the maximun distance that you think they are the same source, the
+#         4. how: 'inner' take the intersection and 'outer' take the union set.
+#         5. thres_dist: the maximun distance that you think they are the same source, the
 #         default value is 1 arcsec.
 
 # Output:
@@ -23,7 +24,7 @@ def PairMatchWithPosition(table1, table2, t1_ra_name, t1_dec_name,
 
 
     table1['name'] = np.arange(len(table1))
-    table2['name'] = 9999
+    table2['name'] = -9999
     for i in range(len(table1)):
         new_dataframe = pd.DataFrame([])
         dist = ((table1['%s' %t1_ra_name][i] - table2['%s' %t2_ra_name])**2 + 
@@ -40,7 +41,10 @@ def PairMatchWithPosition(table1, table2, t1_ra_name, t1_dec_name,
         t1_dec_name = t1_dec_name + '_x'
         t2_dec_name = t2_dec_name + '_y'
             
-    new_table = pd.merge(table1,table2,on='name',how='outer')  
+    if how == 'outer':
+        new_table = pd.merge(table1,table2,on='name',how='outer') 
+    elif how == 'inner':
+        new_table = pd.merge(table1,table2,on='name',how='inner') 
 
     new_table['RA'] = new_table[['%s' %t1_ra_name,'%s' %t2_ra_name]].median(axis=1)
     new_table['DEC'] = new_table[['%s' %t1_ra_name,'%s' %t2_ra_name]].median(axis=1)
