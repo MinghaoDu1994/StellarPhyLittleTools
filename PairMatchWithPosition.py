@@ -30,8 +30,10 @@ def PairMatchWithPosition(table1, table2, t1_ra_name, t1_dec_name,
         dist = ((table1['%s' %t1_ra_name][i] - table2['%s' %t2_ra_name])**2 + 
                 (
                     table1['%s' %t1_dec_name][i] - table2['%s' %t2_dec_name])**2) ** 0.5
-        index = dist <= thres_dist
-        table2['name'][index] == i
+        min_dist = np.min(dist)
+        if min_dist <= thres_dist:
+            index = dist.argmin()
+            table2.loc[index,'name'] = i
     
     if t1_ra_name == t2_ra_name:
         t1_ra_name = t1_ra_name + '_x'
