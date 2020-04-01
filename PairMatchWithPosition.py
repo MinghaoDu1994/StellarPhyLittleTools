@@ -1,4 +1,4 @@
-import pandas 
+#import pandas 
 
 def PairMatchWithPosition(table1, table2, t1_ra_name, t1_dec_name, 
                           t2_ra_name, t2_dec_name, output_file_name,how,
