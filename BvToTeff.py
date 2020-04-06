@@ -35,7 +35,6 @@ def BvToTeff(B_band = None ,V_band = None ,B_V_band = None, stellar_type = None)
         logteff = np.zeros(b_v.shape)
         BC = np.zeros(b_v.shape)
     
-    BC = np.zeros(b_band.shape)
     if stellar_type is None:
         coef = np.array([3.979145106714099,-0.654992268598245,
                          1.740690042385095,-4.608815154057166,
