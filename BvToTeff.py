@@ -25,13 +25,15 @@ def BvToTeff(B_band = None ,V_band = None ,B_V_band = None, stellar_type = None)
         b_band = np.array(B_band)
         v_band = np.array(V_band)
         b_v = b_band - v_band
+        logteff = np.zeros(b_band.shape)
         if b_band.shape != v_band.shape:
             return "Number of B_band and V_band must be equal."
         
     else:
         b_v = B_V_band
+        logteff = np.zeros(b_v.shape)
         
-    logteff = np.zeros(b_band.shape)
+    
     BC = np.zeros(b_band.shape)
     if stellar_type is None:
         coef = np.array([3.979145106714099,-0.654992268598245,
