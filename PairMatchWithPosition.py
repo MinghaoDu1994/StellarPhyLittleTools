@@ -50,7 +50,7 @@ def PairMatchWithPosition(table1, table2, t1_ra_name, t1_dec_name,
         new_table = pd.merge(table1,table2,on='name',how='inner') 
 
     new_table['RA_Merge'] = new_table[['%s' %t1_ra_name,'%s' %t2_ra_name]].median(axis=1)
-    new_table['DEC_Merge'] = new_table[['%s' %t1_ra_name,'%s' %t2_ra_name]].median(axis=1)
+    new_table['DEC_Merge'] = new_table[['%s' %t1_dec_name,'%s' %t2_dec_name]].median(axis=1)
     new_table.drop(['%s'%t1_ra_name, '%s'%t2_ra_name, '%s'%t1_dec_name, '%s'%t2_dec_name]
                    , axis=1, inplace=True)
     
